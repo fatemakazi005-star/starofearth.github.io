@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="About Event Horizon — the team and mission behind this black hole science educational website."/>
+  <title>About — Event Horizon</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ─── PAGE HEADER ─────────────────────────────────────── */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 3rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .page-header-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,107,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.55em;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .page-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900; color: #fff;
+      text-shadow: 0 0 40px rgba(255,107,0,0.25);
+      animation: fadeUp 0.8s ease 0.35s both;
+    }
+    .page-subtitle {
+      font-size: 1rem; color: var(--muted); font-weight: 300;
+      letter-spacing: 0.1em; margin-top: 1rem;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    /* ─── MISSION ─────────────────────────────────────────── */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .mission-text p {
+      font-size: 1.02rem; line-height: 1.85;
+      color: rgba(232,222,255,0.68);
+      margin-bottom: 1.1rem; font-weight: 300;
+    }
+    .mission-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .stat-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .stat-box:hover { background: rgba(255,107,0,0.05); border-color: rgba(255,107,0,0.25); }
+    .stat-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem; font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(255,107,0,0.3);
+    }
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: var(--muted); margin-top: 0.4rem; text-transform: uppercase;
+    }
+
+    /* ─── BLACK HOLE VIZ ──────────────────────────────────── */
+    .bh-canvas-wrap {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #bh-canvas {
+      width: 320px; height: 320px;
+      border-radius: 50%;
+    }
+
+    /* ─── TEAM ────────────────────────────────────────────── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .team-card {
+      background: var(--panel);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: all 0.35s;
+      position: relative; overflow: hidden;
+    }
+    .team-card::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.35s;
+    }
+    .team-card:hover { background: rgba(255,107,0,0.04); }
+    .team-card:hover::before { transform: scaleX(1); }
+
+    .team-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      margin: 0 auto 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      background: rgba(255,107,0,0.1);
+      border: 1px solid rgba(255,107,0,0.25);
+      box-shadow: 0 0 20px rgba(255,107,0,0.1);
+    }
+    .team-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.82rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.05em; margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem; color: var(--accent); letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .team-bio { font-size: 0.88rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* ─── VALUES ──────────────────────────────────────────── */
+    .values-list {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .value-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .value-item:hover { border-color: rgba(255,107,0,0.3); }
+    .value-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .value-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem; font-weight: 700;
+      color: #fff; margin-bottom: 0.4rem; letter-spacing: 0.05em;
+    }
+    .value-text { font-size: 0.9rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .page-header { padding: 6rem 1.5rem 3rem; }
+      .mission-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .bh-canvas-wrap { order: -1; }
+      #bh-canvas { width: 240px; height: 240px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .values-list { grid-template-columns: 1fr; }
+      .mission-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Event Horizon</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-bg"></div>
+    <p class="page-tag">Who We Are</p>
+    <h1 class="page-title">About Event Horizon</h1>
+    <p class="page-subtitle">Bringing the universe's most extreme physics to everyone.</p>
+  </div>
+</div>
+
+<!-- MISSION -->
+<section>
+  <div class="section-inner">
+    <div class="mission-grid">
+      <div class="mission-text reveal">
+        <div class="section-label">Our Mission</div>
+        <h2 class="section-title">Science for<br>Every Mind</h2>
+        <p>Event Horizon was built on a simple belief: the most extreme and awe-inspiring phenomena in the universe should be accessible to everyone — not just physicists and astronomers.</p>
+        <p>We translate cutting-edge astrophysics into visuals, interactive experiences, and plain language. No prior knowledge needed. Just curiosity.</p>
+        <p>From the anatomy of a singularity to the history of gravitational wave detection, every page is crafted to spark wonder and deepen understanding.</p>
+        <div style="margin-top:1.8rem; display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="index.html" class="btn btn-primary">Explore the Science</a>
+          <a href="contact.html" class="btn btn-outline">Say Hello</a>
+        </div>
+      </div>
+      <div class="bh-canvas-wrap reveal" data-delay="150">
+        <canvas id="bh-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="divider"></div>
+<section>
+  <div class="section-inner" style="padding-top:3rem;padding-bottom:3rem;">
+    <div class="mission-stats reveal">
+      <div class="stat-box">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">In-Depth Topics</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">240</div>
+        <div class="stat-label">Years of Discovery</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Questions to Ask</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Singularity ← All Roads Lead</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">The People</div>
+    <h2 class="section-title reveal">Meet the Team</h2>
+    <p style="color:var(--muted);font-size:1rem;font-weight:300;margin-bottom:3rem;" class="reveal">A small group of science communicators, designers, and developers obsessed with making astrophysics beautiful.</p>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">🔭</div>
+        <div class="team-name">Dr. Mira Vasquez</div>
+        <div class="team-role">Scientific Director</div>
+        <p class="team-bio">Astrophysicist with a focus on high-energy phenomena. Former researcher at ESO. Ensures every fact on this site is accurate and up to date.</p>
+      </div>
+      <div class="team-card reveal" data-delay="100">
+        <div class="team-avatar">🎨</div>
+        <div class="team-name">Kai Okonkwo</div>
+        <div class="team-role">Lead Designer</div>
+        <p class="team-bio">UX/UI designer with a passion for data visualization. Created all the animated diagrams and the visual language of Event Horizon.</p>
+      </div>
+      <div class="team-card reveal" data-delay="200">
+        <div class="team-avatar">⚙️</div>
+        <div class="team-name">Priya Anand</div>
+        <div class="team-role">Lead Developer</div>
+        <p class="team-bio">Frontend engineer with 8 years building interactive science platforms. Responsible for the animations, canvas renders, and performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALUES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">What We Stand For</div>
+    <h2 class="section-title reveal">Our Values</h2>
+    <div class="values-list" style="margin-top:3rem;">
+      <div class="value-item reveal">
+        <span class="value-icon">🌌</span>
+        <div>
+          <div class="value-title">Accuracy First</div>
+          <p class="value-text">Every claim is sourced from peer-reviewed research or verified by our scientific team. We never sacrifice correctness for drama.</p>
+        </div>
+      </div>
+      <div class="value-item reveal" data-delay="80">
+        <span class="value-icon">🔓</span>
+        <div>
+          <div class="value-title">Openly Accessible</div>
+          <p class="value-text">Science belongs to everyone. This site is free, open-source on GitHub, and designed to be usable without any prior astrophysics knowledge.</p>
+        </div>
+      </div>
+      <div class="value-item reveal" data-delay="40">
+        <span class="value-icon">✨</span>
+        <div>
+          <div class="value-title">Beauty Matters</div>
+          <p class="value-text">Great design and great science aren't opposites. We believe an interface that inspires awe makes the content more memorable and meaningful.</p>
+        </div>
+      </div>
+      <div class="value-item reveal" data-delay="120">
+        <span class="value-icon">🛰️</span>
+        <div>
+          <div class="value-title">Always Updating</div>
+          <p class="value-text">Astrophysics moves fast. We update this site as new discoveries are made — from gravitational wave events to new black hole images.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-brand">Event Horizon</a>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Event Horizon — Educational Resource</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

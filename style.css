@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <defs>
+    <!-- Outer nebula -->
+    <radialGradient id="neb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ff6b00" stop-opacity="0.08"/>
+      <stop offset="40%"  stop-color="#6400c8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000005" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Singularity -->
+    <radialGradient id="sg" cx="42%" cy="38%" r="60%">
+      <stop offset="0%"   stop-color="#000000"/>
+      <stop offset="70%"  stop-color="#020008"/>
+      <stop offset="100%" stop-color="#0a0020" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Glow ring -->
+    <radialGradient id="gr" cx="50%" cy="50%" r="50%">
+      <stop offset="60%"  stop-color="transparent"/>
+      <stop offset="78%"  stop-color="#ff6b00" stop-opacity="0.5"/>
+      <stop offset="85%"  stop-color="#ffd166" stop-opacity="0.8"/>
+      <stop offset="90%"  stop-color="#ff6b00" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <!-- Disk gradient -->
+    <linearGradient id="disk1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="transparent"/>
+      <stop offset="20%"  stop-color="#ff6b00" stop-opacity="0.15"/>
+      <stop offset="45%"  stop-color="#ffd166" stop-opacity="0.9"/>
+      <stop offset="55%"  stop-color="#ffd166" stop-opacity="0.9"/>
+      <stop offset="80%"  stop-color="#ff6b00" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+    <filter id="blur-sm"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="blur-md"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="blur-lg"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Nebula background -->
+  <circle cx="300" cy="300" r="290" fill="url(#neb)"/>
+
+  <!-- Outer dust ring -->
+  <ellipse cx="300" cy="300" rx="240" ry="68" fill="none"
+    stroke="#ff6b00" stroke-width="1" stroke-opacity="0.12" filter="url(#blur-sm)">
+    <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="360 300 300" dur="22s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Main accretion disk - back half -->
+  <ellipse cx="300" cy="300" rx="210" ry="58" fill="none"
+    stroke="url(#disk1)" stroke-width="14" stroke-opacity="0.6" filter="url(#blur-sm)">
+    <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="360 300 300" dur="10s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Secondary ring -->
+  <ellipse cx="300" cy="300" rx="170" ry="46" fill="none"
+    stroke="#ff8c42" stroke-width="6" stroke-opacity="0.35" filter="url(#blur-md)">
+    <animateTransform attributeName="transform" type="rotate" from="360 300 300" to="0 300 300" dur="7s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Event horizon photon glow -->
+  <circle cx="300" cy="300" r="105" fill="url(#gr)" filter="url(#blur-md)"/>
+
+  <!-- Singularity / black void -->
+  <circle cx="300" cy="300" r="90" fill="url(#sg)"/>
+  <circle cx="300" cy="300" r="78" fill="#000000"/>
+
+  <!-- Glow rim on singularity -->
+  <circle cx="300" cy="300" r="90" fill="none"
+    stroke="#ff6b00" stroke-width="2" stroke-opacity="0.5" filter="url(#blur-sm)"/>
+
+  <!-- Main accretion disk - front half (overlaps singularity) -->
+  <ellipse cx="300" cy="300" rx="210" ry="58"
+    clip-path="none" fill="none"
+    stroke="url(#disk1)" stroke-width="14" stroke-opacity="0.55" filter="url(#blur-sm)">
+    <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="360 300 300" dur="10s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Lensing / light bending arcs -->
+  <path d="M 140 280 Q 215 200 300 195 Q 385 200 460 280"
+    fill="none" stroke="white" stroke-width="1" stroke-opacity="0.06" filter="url(#blur-sm)"/>
+  <path d="M 140 320 Q 215 400 300 405 Q 385 400 460 320"
+    fill="none" stroke="white" stroke-width="1" stroke-opacity="0.06" filter="url(#blur-sm)"/>
+
+  <!-- Pulsing outer ring -->
+  <circle cx="300" cy="300" r="118" fill="none"
+    stroke="white" stroke-width="0.5" stroke-opacity="0.08">
+    <animate attributeName="r" values="118;128;118" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="stroke-opacity" values="0.08;0.18;0.08" dur="4s" repeatCount="indefinite"/>
+  </circle>
+</svg>

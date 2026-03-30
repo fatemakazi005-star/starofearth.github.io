@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Event Horizon — An immersive educational journey into the science of black holes, spacetime, and the universe's most extreme objects."/>
+  <title>Event Horizon — The Science of Black Holes</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ─── HERO ─────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-nebula {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/svg/nebula-bg.svg');
+      background-size: cover;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .black-hole-container {
+      position: absolute;
+      width: 520px; height: 520px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      transition: transform 0.1s linear;
+    }
+    .bh-svg { width: 100%; height: 100%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      margin-top: 290px;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.4rem, 7.5vw, 5.8rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: #fff;
+      text-shadow: 0 0 60px rgba(255,107,0,0.35), 0 0 120px rgba(255,45,85,0.15);
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-top: 1.2rem;
+    }
+    .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+      z-index: 10;
+    }
+    .scroll-hint span { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.35em; color: var(--muted); }
+    .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 2.2s ease-in-out infinite; }
+
+    /* ─── WHAT IS ───────────────────────────────────────────── */
+    #what .inner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .what-text p {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: rgba(232,222,255,0.68);
+      margin-bottom: 1.1rem;
+      font-weight: 300;
+    }
+    .what-visual {
+      position: relative;
+      height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .anatomy-wrap { width: 100%; max-width: 380px; }
+    .anatomy-wrap img, .anatomy-wrap object { width: 100%; height: auto; }
+
+    /* ─── TYPES ─────────────────────────────────────────────── */
+    #types { text-align: center; }
+    #types .section-label { justify-content: center; }
+    #types .section-label::before { display: none; }
+    .types-visual { margin: 2.5rem auto 3rem; max-width: 780px; }
+    .types-visual img { width: 100%; height: auto; }
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(255,107,0,0.06);
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .type-card { padding: 2.2rem 1.8rem; }
+    .type-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+    .type-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+    }
+    .type-mass {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem; color: var(--accent);
+      letter-spacing: 0.1em; margin-bottom: 0.9rem;
+    }
+    .type-desc { font-size: 0.9rem; line-height: 1.7; color: var(--muted); font-weight: 300; }
+
+    /* ─── FACTS ─────────────────────────────────────────────── */
+    #facts { position: relative; }
+    #facts::before {
+      content: ''; position: absolute; left: 3rem; top: 0;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(255,107,0,0.2), transparent);
+    }
+    .fact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .fact-item {
+      padding: 2rem 2rem 2rem 2.2rem;
+      background: rgba(255,107,0,0.02);
+      border: 1px solid var(--border);
+      position: relative;
+      transition: all 0.3s;
+    }
+    .fact-item:hover { background: rgba(255,107,0,0.06); border-color: rgba(255,107,0,0.25); }
+    .fact-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.8rem; font-weight: 900;
+      color: rgba(255,107,0,0.1);
+      position: absolute; top: 1.2rem; right: 1.2rem;
+    }
+    .fact-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.7rem;
+    }
+    .fact-body { font-size: 0.92rem; line-height: 1.78; color: rgba(232,222,255,0.62); font-weight: 300; }
+
+    /* ─── TIMELINE ──────────────────────────────────────────── */
+    #timeline { position: relative; }
+    .tl-center { text-align: center; margin-bottom: 5rem; }
+    .tl-line {
+      position: absolute; left: 50%; top: 10rem; bottom: 3rem;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,107,0,0.25), transparent);
+      transform: translateX(-50%);
+    }
+    .tl-items { display: flex; flex-direction: column; gap: 3rem; }
+    .tl-item { display: grid; grid-template-columns: 1fr 50px 1fr; align-items: start; }
+    .tl-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 14px var(--accent);
+      justify-self: center; grid-column: 2; margin-top: 4px;
+      position: relative;
+    }
+    .tl-dot::after {
+      content: ''; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 1px solid rgba(255,107,0,0.3);
+    }
+    .tl-item:nth-child(odd)  .tl-content { grid-column: 1; text-align: right; padding-right: 2.5rem; }
+    .tl-item:nth-child(even) .tl-content { grid-column: 3; text-align: left;  padding-left:  2.5rem; }
+    .tl-item:nth-child(odd)  .tl-spacer  { grid-column: 3; }
+    .tl-item:nth-child(even) .tl-spacer  { grid-column: 1; }
+    .tl-year {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.3rem;
+    }
+    .tl-event {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.82rem; color: #fff; margin-bottom: 0.5rem;
+    }
+    .tl-detail { font-size: 0.88rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* ─── CTA BANNER ────────────────────────────────────────── */
+    #cta-banner {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 3rem;
+      text-align: center;
+    }
+    .cta-title { font-family: 'Orbitron', monospace; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 700; color: #fff; margin-bottom: 1rem; }
+    .cta-sub { font-size: 1rem; color: var(--muted); margin-bottom: 2.2rem; font-weight: 300; }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .black-hole-container { width: 300px; height: 300px; transform: translate(-50%, -58%); }
+      .hero-content { margin-top: 170px; }
+      #what .inner-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .what-visual { height: auto; }
+      .types-grid { grid-template-columns: 1fr; }
+      .fact-list { grid-template-columns: 1fr; }
+      .tl-line { display: none; }
+      .tl-item { grid-template-columns: 1fr; }
+      .tl-dot { display: none; }
+      .tl-item:nth-child(odd)  .tl-content,
+      .tl-item:nth-child(even) .tl-content { grid-column: 1; text-align: left; padding: 0; }
+      .tl-item .tl-spacer { display: none; }
+      #facts::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Event Horizon</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-nebula"></div>
+  <div class="black-hole-container">
+    <img src="assets/svg/blackhole-hero.svg" alt="Animated black hole illustration" class="bh-svg"/>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Deep Space Education Series</p>
+    <h1 class="hero-title">THE SCIENCE<br>OF <span>BLACK HOLES</span></h1>
+    <p class="hero-sub">Where space ends. Where time breaks. Where physics bends.</p>
+    <div class="hero-cta">
+      <a href="#what" class="btn btn-primary">Begin Descent</a>
+      <a href="about.html" class="btn btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT IS A BLACK HOLE -->
+<section id="what">
+  <div class="section-inner">
+    <div class="inner-grid">
+      <div class="what-text reveal">
+        <div class="section-label">01 — Definition</div>
+        <h2 class="section-title">What Is a<br>Black Hole?</h2>
+        <p>A black hole is a region of spacetime where gravity is so extreme that nothing — not even light — can escape once it crosses the boundary known as the <strong style="color:var(--accent)">event horizon</strong>.</p>
+        <p>They form when massive stars collapse at the end of their lifecycle, compressing enormous mass into an infinitely dense point called a <strong style="color:var(--accent)">singularity</strong>.</p>
+        <p>Black holes warp the fabric of spacetime around them, creating effects like gravitational time dilation, gravitational lensing, and spaghettification.</p>
+        <div style="margin-top:1.5rem">
+          <span class="chip">Event Horizon</span>
+          <span class="chip">Singularity</span>
+          <span class="chip">Spacetime Curvature</span>
+          <span class="chip">Hawking Radiation</span>
+          <span class="chip">Gravitational Lensing</span>
+        </div>
+      </div>
+      <div class="what-visual reveal" data-delay="150">
+        <div class="anatomy-wrap">
+          <img src="assets/svg/anatomy-diagram.svg" alt="Anatomy diagram of a black hole showing singularity, event horizon, photon sphere, and accretion disk"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TYPES -->
+<section id="types">
+  <div class="section-inner">
+    <div class="section-label reveal">02 — Classification</div>
+    <h2 class="section-title reveal">Types of Black Holes</h2>
+    <p style="color:var(--muted);font-size:1rem;font-weight:300;max-width:600px;margin:0 auto 1rem;" class="reveal">Not all black holes are equal. They span an astonishing range of sizes, from a few solar masses to billions.</p>
+    <div class="types-visual reveal" data-delay="100">
+      <img src="assets/svg/types-comparison.svg" alt="Comparative scale diagram of stellar, intermediate, and supermassive black holes"/>
+    </div>
+    <div class="types-grid">
+      <div class="type-card card reveal">
+        <span class="type-icon">⚫</span>
+        <div class="type-name">Stellar</div>
+        <div class="type-mass">3 – 20 × M☉</div>
+        <p class="type-desc">Born from the gravitational collapse of a dying massive star. The most commonly detected type via gravitational-wave observatories and X-ray telescopes.</p>
+      </div>
+      <div class="type-card card reveal" data-delay="100">
+        <span class="type-icon">🌀</span>
+        <div class="type-name">Supermassive</div>
+        <div class="type-mass">10⁶ – 10¹⁰ × M☉</div>
+        <p class="type-desc">Reside at the centers of almost all large galaxies, including our own Milky Way. M87* and Sgr A* have been directly imaged. Their formation is still debated.</p>
+      </div>
+      <div class="type-card card reveal" data-delay="200">
+        <span class="type-icon">💠</span>
+        <div class="type-name">Intermediate</div>
+        <div class="type-mass">10² – 10⁵ × M☉</div>
+        <p class="type-desc">The most elusive class. Candidates have been found in dense star clusters. They may be the missing link between stellar and supermassive black holes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FACTS -->
+<section id="facts">
+  <div class="section-inner">
+    <div class="section-label reveal">03 — Knowledge Base</div>
+    <h2 class="section-title reveal">Mind-Bending Facts</h2>
+    <div class="fact-list" style="margin-top:3rem">
+      <div class="fact-item reveal">
+        <div class="fact-number">01</div>
+        <div class="fact-title">Time Dilation</div>
+        <p class="fact-body">Near a black hole, time passes slower relative to a distant observer. An astronaut hovering near the event horizon for hours might return to find decades have passed on Earth — a phenomenon predicted by Einstein's General Relativity.</p>
+      </div>
+      <div class="fact-item reveal" data-delay="80">
+        <div class="fact-number">02</div>
+        <div class="fact-title">Hawking Radiation</div>
+        <p class="fact-body">Stephen Hawking theorized that black holes slowly emit thermal radiation due to quantum mechanical effects near the event horizon — meaning black holes can eventually evaporate over unimaginably long timescales.</p>
+      </div>
+      <div class="fact-item reveal" data-delay="60">
+        <div class="fact-number">03</div>
+        <div class="fact-title">Spaghettification</div>
+        <p class="fact-body">Tidal forces near a black hole are so intense they would stretch any object — including a human — into a long, thin strand of matter. The effect is stronger and faster near smaller black holes due to steeper gravity gradients.</p>
+      </div>
+      <div class="fact-item reveal" data-delay="140">
+        <div class="fact-number">04</div>
+        <div class="fact-title">No Hair Theorem</div>
+        <p class="fact-body">Black holes are described entirely by just three measurable properties: mass, electric charge, and spin. All other information about the matter that formed them is inaccessible — a puzzle known as the Information Paradox.</p>
+      </div>
+      <div class="fact-item reveal" data-delay="40">
+        <div class="fact-number">05</div>
+        <div class="fact-title">Gravitational Lensing</div>
+        <p class="fact-body">A black hole's gravity bends light paths around it, acting as a cosmic magnifying lens. The effect can create multiple distorted images of background galaxies, arcs, and even complete "Einstein Rings."</p>
+      </div>
+      <div class="fact-item reveal" data-delay="120">
+        <div class="fact-number">06</div>
+        <div class="fact-title">First Photograph</div>
+        <p class="fact-body">In April 2019, the Event Horizon Telescope — a planet-wide network of radio observatories — captured the first direct image of a black hole: the supermassive M87*, located 55 million light-years from Earth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-inner">
+    <div class="tl-center">
+      <div class="section-label reveal" style="justify-content:center">04 — Discovery</div>
+      <h2 class="section-title reveal">Historical Timeline</h2>
+    </div>
+    <div style="position:relative">
+      <div class="tl-line"></div>
+      <div class="tl-items">
+
+        <div class="tl-item">
+          <div class="tl-content reveal">
+            <div class="tl-year">1783</div>
+            <div class="tl-event">Dark Stars Proposed</div>
+            <p class="tl-detail">John Michell proposed "dark stars" — objects so massive that even light cannot escape. A remarkably prescient idea, centuries before the physics to describe it existed.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-spacer"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-content reveal">
+            <div class="tl-year">1915</div>
+            <div class="tl-event">General Relativity</div>
+            <p class="tl-detail">Einstein's field equations described how mass warps spacetime — and Karl Schwarzschild derived the first exact solution, describing what we now call a black hole.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-content reveal">
+            <div class="tl-year">1967</div>
+            <div class="tl-event">"Black Hole" Coined</div>
+            <p class="tl-detail">Physicist John Wheeler popularized the term "black hole" at a conference in New York, replacing the unwieldy "gravitationally completely collapsed star."</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-spacer"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-content reveal">
+            <div class="tl-year">1974</div>
+            <div class="tl-event">Hawking Radiation</div>
+            <p class="tl-detail">Stephen Hawking showed that black holes are not entirely black — quantum effects cause them to radiate, slowly losing mass over cosmic timescales.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-content reveal">
+            <div class="tl-year">2015</div>
+            <div class="tl-event">Gravitational Waves Detected</div>
+            <p class="tl-detail">LIGO detected ripples in spacetime from two black holes merging 1.3 billion light-years away — confirming a 100-year-old prediction and opening a new era of astronomy.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-spacer"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-spacer"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-content reveal">
+            <div class="tl-year">2019</div>
+            <div class="tl-event">First Black Hole Image</div>
+            <p class="tl-detail">The Event Horizon Telescope produced history's first direct image of a black hole — M87* — using a network of observatories spanning the entire planet.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-content reveal">
+            <div class="tl-year">2022</div>
+            <div class="tl-event">Milky Way's Black Hole Imaged</div>
+            <p class="tl-detail">The EHT released the first image of Sagittarius A*, the supermassive black hole at the center of our own galaxy, 27,000 light-years from Earth.</p>
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-spacer"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA BANNER -->
+<div id="cta-banner">
+  <p class="cta-title reveal">Curious About the Team Behind This?</p>
+  <p class="cta-sub reveal" data-delay="100">Learn who built this site and the mission to make space science accessible.</p>
+  <div class="reveal" data-delay="200">
+    <a href="about.html" class="btn btn-primary">Meet the Team</a>
+    &nbsp;&nbsp;
+    <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-brand">Event Horizon</a>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Event Horizon — Educational Resource</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

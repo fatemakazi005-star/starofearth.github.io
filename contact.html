@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Contact the Event Horizon team — questions, collaborations, and feedback welcome."/>
+  <title>Contact — Event Horizon</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ─── PAGE HEADER ─────────────────────────────────────── */
+    .page-header {
+      position: relative; z-index: 1;
+      padding: 7rem 3rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(0,229,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.55em; color: var(--cyan); text-transform: uppercase; margin-bottom: 1rem; animation: fadeUp 0.8s ease 0.2s both; }
+    .page-title { font-family: 'Orbitron', monospace; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; color: #fff; text-shadow: 0 0 40px rgba(0,229,255,0.2); animation: fadeUp 0.8s ease 0.35s both; }
+    .page-subtitle { font-size: 1rem; color: var(--muted); font-weight: 300; letter-spacing: 0.1em; margin-top: 1rem; animation: fadeUp 0.8s ease 0.5s both; }
+
+    /* ─── CONTACT LAYOUT ──────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* ─── CONTACT INFO ────────────────────────────────────── */
+    .info-items { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+    .info-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .info-item:hover { border-color: rgba(0,229,255,0.3); }
+    .info-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      background: rgba(0,229,255,0.07);
+      border: 1px solid rgba(0,229,255,0.2);
+    }
+    .info-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--cyan); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .info-value { font-size: 0.95rem; color: var(--text); font-weight: 300; }
+    .info-detail { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ─── FORM ────────────────────────────────────────────── */
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 2.8rem;
+      position: relative;
+    }
+    .contact-form::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--cyan), var(--purple), var(--accent));
+    }
+    .form-title { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: #fff; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .form-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; margin-bottom: 2rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.4rem; }
+    .form-label {
+      display: block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      appearance: none;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 2px rgba(0,229,255,0.08);
+      background: rgba(0,229,255,0.03);
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(107,95,138,0.6); }
+    .form-textarea { resize: vertical; min-height: 130px; }
+    .form-select option { background: var(--deep); }
+
+    .form-check { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.6rem; }
+    .form-check input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--cyan); cursor: pointer;
+    }
+    .form-check label { font-size: 0.82rem; color: var(--muted); line-height: 1.5; cursor: pointer; }
+
+    .btn-submit {
+      width: 100%;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.72rem; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--cyan);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+      transition: all 0.3s;
+    }
+    .btn-submit:hover { background: #fff; box-shadow: 0 0 30px rgba(0,229,255,0.4); transform: translateY(-2px); }
+
+    /* success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .form-success .success-title { font-family: 'Orbitron', monospace; font-size: 1rem; color: var(--cyan); margin-bottom: 0.5rem; }
+    .form-success p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ─── FAQ ─────────────────────────────────────────────── */
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item:hover { border-color: rgba(255,107,0,0.25); }
+    .faq-q {
+      padding: 1.3rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.78rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.05em;
+      user-select: none;
+      gap: 1rem;
+    }
+    .faq-q .arrow { color: var(--accent); transition: transform 0.3s; flex-shrink: 0; }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease;
+      font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300;
+    }
+    .faq-a-inner { padding: 0 1.5rem 1.3rem; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .page-header { padding: 6rem 1.5rem 3rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Event Horizon</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-bg"></div>
+    <p class="page-tag">Reach Out</p>
+    <h1 class="page-title">Contact Us</h1>
+    <p class="page-subtitle">Questions, corrections, collaborations — we're all ears.</p>
+  </div>
+</div>
+
+<!-- MAIN CONTACT -->
+<section>
+  <div class="section-inner">
+    <div class="contact-grid">
+
+      <!-- INFO PANEL -->
+      <div class="reveal">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's Talk<br>Science</h2>
+        <p style="font-size:1rem;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:0.5rem;">
+          Whether you've spotted a scientific error, want to collaborate, or just want to nerd out about black holes — drop us a line.
+        </p>
+        <div class="info-items">
+          <div class="info-item">
+            <div class="info-icon">📡</div>
+            <div>
+              <div class="info-label">General Inquiry</div>
+              <div class="info-value">hello@eventhorizon.space</div>
+              <div class="info-detail">Questions, feedback, and general messages</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">🔬</div>
+            <div>
+              <div class="info-label">Science Team</div>
+              <div class="info-value">science@eventhorizon.space</div>
+              <div class="info-detail">Corrections and technical discussions</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">🤝</div>
+            <div>
+              <div class="info-label">Collaborations</div>
+              <div class="info-value">collab@eventhorizon.space</div>
+              <div class="info-detail">Partnerships, press, and educational licensing</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">💻</div>
+            <div>
+              <div class="info-label">Open Source</div>
+              <div class="info-value">github.com/event-horizon</div>
+              <div class="info-detail">View the code, open issues, submit PRs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="contact-form reveal" data-delay="150">
+        <div id="form-wrap">
+          <div class="form-title">Send a Transmission</div>
+          <p class="form-sub">We typically respond within 48 hours.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fname">First Name</label>
+              <input class="form-input" type="text" id="fname" placeholder="Vera"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lname">Last Name</label>
+              <input class="form-input" type="text" id="lname" placeholder="Rubin"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input class="form-input" type="email" id="email" placeholder="you@cosmos.edu"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject</label>
+            <select class="form-select" id="subject">
+              <option value="">— Select a topic —</option>
+              <option value="question">Science Question</option>
+              <option value="correction">Factual Correction</option>
+              <option value="collab">Collaboration Proposal</option>
+              <option value="press">Press / Media</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea class="form-textarea" id="message" placeholder="Tell us what's on your mind..."></textarea>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="newsletter" />
+            <label for="newsletter">Subscribe to our newsletter for new discoveries and site updates.</label>
+          </div>
+          <button class="btn-submit" onclick="submitForm()">Transmit Message ▶</button>
+        </div>
+        <div class="form-success" id="form-success">
+          <div class="success-icon">🛰️</div>
+          <div class="success-title">Message Transmitted</div>
+          <p>We've received your message and will respond within 48 hours. Thanks for reaching out!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Common Questions</div>
+    <h2 class="section-title reveal">FAQ</h2>
+    <div class="faq-list" style="margin-top:3rem;">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is all the science on this site accurate?
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes — every scientific claim is reviewed by our science team and sourced from peer-reviewed literature or verified by reputable institutions such as NASA, ESA, and the EHT Collaboration. If you spot an error, please use the contact form above.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I use your content for my school or university?
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Absolutely. All text content is free to use for educational purposes with attribution. SVG diagrams and assets are available under a Creative Commons license. Contact us if you need higher-resolution exports or formal licensing.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is the source code available?
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">Yes! The entire website is open source and available on GitHub. We welcome pull requests for bug fixes, improvements, and new content. See the link in the contact section above.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How often is the site updated?
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">We aim to update the site within a few weeks of major discoveries — new EHT images, gravitational wave events, or significant papers published in Nature or Science. Sign up for the newsletter to be notified.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          I'm a researcher. Can I contribute content?
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">We'd love that! We're always looking for researchers and science communicators who want to contribute articles, visualizations, or expert quotes. Reach out via the collaboration email above.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-brand">Event Horizon</a>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Event Horizon — Educational Resource</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  function submitForm() {
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    if (!email || !message) {
+      alert('Please fill in at least your email and message.');
+      return;
+    }
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+</script>
+</body>
+</html>
